@@ -21,6 +21,25 @@
             attribution: 'OSi copyright goes here! &copy; <a href="http://www.osi.ie">OSi</a> '
         }).addTo(map);
 
+        L.marker([53.36151, -6.3386]).addTo(map)
+			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+
+        L.polygon([
+			[53.369, -6.38],
+			[53.363, -6.36],
+			[53.367, -6.347]
+		]).addTo(map).bindPopup("I am a polygon.");
+
+        var popup = L.popup();
+
+        function onMapClick(e) {
+            popup
+				.setLatLng(e.latlng)
+				.setContent("You clicked the map at " + e.latlng.toString())
+				.openOn(map);
+        }
+
+        map.on('click', onMapClick);
     </script>
 </body>
 </html>

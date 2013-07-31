@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Esri Javascript API Hello World OSI Example</title>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <meta name="author" content="Philip Thompson">
+
+    <link rel="stylesheet" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/css/esri.css">
+    
+    <script>var dojoConfig = { parseOnLoad: true }; </script>
+    <script src="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/"></script>
+    <script>
+        dojo.require("esri.map");
+        dojo.require("esri.layers.WebTiledLayer");
+
+        var map;
+        function init() {
+            map = new esri.Map("map", {
+                center: [-6.3386, 53.36151],
+                zoom: 13
+            });
+
+            var wtl = esri.layers.WebTiledLayer;
+            var osiMap = new wtl("https://${subDomain}.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Basemap_WM/MapServer/tile/${level}/${row}/${col}.jpg", {
+                "copyright": "OSi copyright goes here! &copy; <a href='http://www.osi.ie'>OSi</a>",
+                "id": "OSi",
+                "subDomains": ["webservices"]
+            });
+            map.addLayer(osiMap);
+
+            var markerSymbol = new esri.symbol.SimpleMarkerSymbol().setStyle(
+                esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE).setColor(
+                    new dojo.Color([255, 0, 0, 0.5]));
+
+            var point = new esri.geometry.Point(-6.3386, 53.36151, new esri.SpatialReference({ wkid: 4326 }));
+            var markerInfoTemplate = new esri.InfoTemplate("<b>Hello world!</b><br />I am a popup.");
+            var markerGraphic = new esri.Graphic(point, markerSymbol, null, markerInfoTemplate);
+
+            map.graphics.add(markerGraphic);
+
+
+            var sfs = new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID,
+                new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT,
+                    new dojo.Color([255, 0, 0]), 2), new dojo.Color([255, 255, 0, 0.25]));
+
+            var polygon = new esri.geometry.Polygon(new esri.SpatialReference({ wkid: 4326 }));
+            polygon.addRing([[-6.38, 53.369], [-6.36, 53.363], [-6.347, 53.367], [-6.38, 53.369]]);
+            var polygonInfoTemplate = new esri.InfoTemplate("I am a polygon.");
+            var polygonGraphic = new esri.Graphic(polygon, sfs, null, polygonInfoTemplate);
+
+            map.graphics.add(polygonGraphic);
+
+
+            dojo.connect(map, "onClick", function (e) {
+                var markerSymbol = new esri.symbol.SimpleMarkerSymbol().setStyle(
+                    esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE).setColor(
+                        new dojo.Color([255, 0, 0, 0.5]));
+                var markerInfoTemplate = new esri.InfoTemplate("You clicked the map at " + e.mapPoint.x + ", " + e.mapPoint.y);
+                var markerGraphic = new esri.Graphic(e.mapPoint, markerSymbol, null, markerInfoTemplate);
+
+                map.graphics.add(markerGraphic);
+            });
+        }
+
+        //show map on load 
+        dojo.ready(init);
+    </script>
+  </head>
+  <body>
+    <div id="map" style="width: 600px; height: 400px"></div>
+  </body>
+</html>
