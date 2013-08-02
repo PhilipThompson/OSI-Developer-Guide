@@ -22,19 +22,43 @@
                 zoom: 13
             });
 
-            var wtl = esri.layers.WebTiledLayer;
-            var osiMap = new wtl("https://${subDomain}.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Basemap_WM/MapServer/tile/${level}/${row}/${col}.jpg", {
+            var osiMap = new esri.layers.WebTiledLayer("https://${subDomain}.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Basemap_WM/MapServer/tile/${level}/${row}/${col}.jpg", {
                 "copyright": "OSi copyright goes here! &copy; <a href='http://www.osi.ie'>OSi</a>",
                 "id": "OSi",
                 "subDomains": ["webservices"]
             });
             map.addLayer(osiMap);
         }
+
+        function showStreets() {
+            map.removeAllLayers();
+            var osiMap = new esri.layers.WebTiledLayer("https://${subDomain}.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Basemap_WM/MapServer/tile/${level}/${row}/${col}.jpg", {
+                "copyright": "OSi copyright goes here! &copy; <a href='http://www.osi.ie'>OSi</a>",
+                "id": "OSi",
+                "subDomains": ["webservices"]
+            });
+            map.addLayer(osiMap);
+        }
+
+        function showAerial() {
+            map.removeAllLayers();
+            var osiMap = new esri.layers.WebTiledLayer("https://${subDomain}.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Ortho_WM/MapServer/tile/${level}/${row}/${col}.jpg", {
+                "copyright": "OSi copyright goes here! &copy; <a href='http://www.osi.ie'>OSi</a>",
+                "id": "OSi",
+                "subDomains": ["webservices"]
+            });
+            map.addLayer(osiMap);
+        }
+
         //show map on load 
         dojo.ready(init);
     </script>
   </head>
   <body>
     <div id="map" style="width: 600px; height: 400px"></div>
+    <div>
+      <input id="Button1" type="button" value="Show Streets" onclick="showStreets()"/>
+      <input id="Button2" type="button" value="Show Aerial" onclick="showAerial()"/>
+      </div>
   </body>
 </html>
