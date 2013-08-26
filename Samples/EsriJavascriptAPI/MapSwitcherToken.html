@@ -1,0 +1,121 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <!--The viewport meta tag is used to improve the presentation and behavior of the samples
+      on iOS devices-->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <title>Esri Javascript API Map Switcher OSi Token Example</title>
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.1/js/dojo/dijit/themes/claro/claro.css">
+    <style>
+        html, body
+        {
+            height: 98%;
+            width: 98%;
+            margin: 0;
+            padding: 5px;
+        }
+        #map
+        {
+            border: solid 1px #B5BCC7;
+            padding: 0;
+        }
+        #paneHeader
+        {
+            background: url(images/header.png) repeat-x;
+            color: white;
+            border-bottom: solid 1px #B5BCC7;
+            text-align: center;
+            height: 30px;
+            margin: 0;
+            overflow: hidden;
+            font-size: 16px;
+            padding: 8px 5px;
+        }
+        #rightPane
+        {
+            width: 150px;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script type="text/javascript">        var djConfig = { parseOnLoad: true };</script>
+    <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=3.1"></script>
+    <script type="text/javascript">
+        dojo.require("esri.map");
+        dojo.require("dijit.form.Button");
+        dojo.require("dijit.layout.BorderContainer");
+        dojo.require("dijit.layout.ContentPane");
+        dojo.require("esri.dijit.BasemapGallery");
+        dojo.require("esri.arcgis.utils");
+
+        var map;
+
+        function init() {
+            map = new esri.Map("map", {
+                basemap: "Topographic Map",
+                center: [-6.3386, 53.36151],
+                zoom: 13
+            });
+            createBasemapGallery();
+        }
+
+        function createBasemapGallery() {
+            //manually create basemaps to add to basemap gallery
+            var basemaps = [];
+
+            var TopographicLayer = new esri.dijit.BasemapLayer({
+                url: "https://webservices.osi.ie/ArcGIS/rest/services/ITM/MapGenie_Basemap_ITM/MapServer?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA.."
+            });
+            var TopographicBasemap = new esri.dijit.Basemap({
+                layers: [TopographicLayer],
+                title: "Topographic Map",
+                thumbnailUrl: "./assets/images/basemap-osi-standard-hw.jpg"
+            });
+            basemaps.push(TopographicBasemap);
+
+            var AerialLayer = new esri.dijit.BasemapLayer({
+                url: "https://webservices.osi.ie/ArcGIS/rest/services/ITM/MapGenie_Ortho_ITM/MapServer?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA.."
+            });
+            var AerialBasemap = new esri.dijit.Basemap({
+                layers: [AerialLayer],
+                title: "Aerial Photograpy",
+                thumbnailUrl: "./assets/images/basemap-osi-aerial-hw.jpg"
+            });
+            basemaps.push(AerialBasemap);
+
+            var basemapGallery = new esri.dijit.BasemapGallery({
+                showArcGISBasemaps: false,
+                basemaps: basemaps,
+                map: map
+            }, "basemapGallery");
+
+            basemapGallery.startup();
+
+            dojo.connect(basemapGallery, "onError", function (error) { console.log(error) });
+        }
+
+        dojo.addOnLoad(init);
+    </script>
+</head>
+<body class="claro">
+    <div dojotype="dijit.layout.BorderContainer" design="headline" gutters="true" style="width: 100%;
+        height: 100%;">
+        <div id="map" dojotype="dijit.layout.ContentPane" region="center">
+        </div>
+        <div dojotype="dijit.layout.ContentPane" region="right" id="rightPane">
+            <div dojotype="dijit.layout.BorderContainer" design="headline" gutters="false" style="width: 100%;
+                height: 100%;">
+                <div id="paneHeader" dojotype="dijit.layout.ContentPane" region="top">
+                    <span>Select Basemap</span>
+                </div>
+                <div dojotype="dijit.layout.ContentPane" region="center">
+                    <div id="basemapGallery">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
