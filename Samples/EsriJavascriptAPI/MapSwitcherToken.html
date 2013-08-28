@@ -66,7 +66,7 @@
             var basemaps = [];
 
             var TopographicLayer = new esri.dijit.BasemapLayer({
-                url: "https://webservices.osi.ie/ArcGIS/rest/services/ITM/MapGenie_Basemap_ITM/MapServer?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA.."
+                url: "https://webservices.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Basemap_WM/MapServer?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA.."
             });
             var TopographicBasemap = new esri.dijit.Basemap({
                 layers: [TopographicLayer],
@@ -76,7 +76,7 @@
             basemaps.push(TopographicBasemap);
 
             var AerialLayer = new esri.dijit.BasemapLayer({
-                url: "https://webservices.osi.ie/ArcGIS/rest/services/ITM/MapGenie_Ortho_ITM/MapServer?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA.."
+                url: "https://webservices.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Ortho_WM/MapServer?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA.."
             });
             var AerialBasemap = new esri.dijit.Basemap({
                 layers: [AerialLayer],
