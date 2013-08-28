@@ -4,141 +4,25 @@
     <title>OpenLayers Hello World OSI Example</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="author" content="Philip Thompson">
-    <script src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAjpkAC9ePGem0lIq5XcMiuhR_wWLPFku8Ix9i2SXYRVK3e45q1BQUd_beF8dtzKET_EteAjPdGDwqpQ'></script>
     <script src="http://openlayers.org/dev/OpenLayers.js"></script>
     <script src="http://openlayers.org/dev/lib/OpenLayers/Layer/ArcGISCache.js" type="text/javascript"></script>
     <script type="text/javascript">
-        var map,
-            osiLayer,
-            googleStreetsLayer,
-        //This layer requires meta data about the ArcGIS service.  Typically you should use a 
-        //JSONP call to get this dynamically.  For this example, we are just going to hard-code
-        //an example that we got from here:
-        //    http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer?f=json&pretty=true
-            layerInfo = {
-                "currentVersion": 10.01,
-                "serviceDescription": "This worldwide street map presents highway-level data for the world and street-level data for the United States, Canada, Japan, Southern Africa, and a number of countries in Europe and elsewhere. This comprehensive street map includes highways, major roads, minor roads, railways, water features, administrative boundaries, cities, parks, and landmarks, overlaid on shaded relief imagery for added context. The street map was developed by ESRI using ESRI basemap data, AND road data, USGS elevation data, and UNEP-WCMC parks and protected areas for the world, and Tele Atlas Dynamap� and Multinet� street data for North America and Europe. Coverage for street-level data in Europe includes Andorra, Austria, Belgium, Czech Republic, Denmark, France, Germany, Great Britain, Greece, Hungary, Ireland, Italy, Luxembourg, Netherlands, Northern Ireland (Belfast only), Norway, Poland, Portugal, San Marino, Slovakia, Spain, Sweden, and Switzerland. Coverage for street-level data elsewhere in the world includes China (Hong Kong only), Colombia, Egypt (Cairo only), Indonesia (Jakarta only), Japan, Mexico (Mexico City only), Russia (Moscow and St. Petersburg only), South Africa, Thailand, and Turkey (Istanbul and Ankara only). For more information on this map, visit us \u003ca href=\"http://goto.arcgisonline.com/maps/World_Street_Map \" target=\"_new\"\u003eonline\u003c/a\u003e.",
-                "mapName": "Layers",
-                "description": "This worldwide street map presents highway-level data for the world and street-level data for the United States, Canada, Japan, Southern Africa, most countries in Europe, and several other countries. This comprehensive street map includes highways, major roads, minor roads, one-way arrow indicators, railways, water features, administrative boundaries, cities, parks, and landmarks, overlaid on shaded relief imagery for added context. The map also includes building footprints for selected areas in the United States and Europe and parcel boundaries for much of the lower 48 states.\n\nThe street map was developed by ESRI using ESRI basemap data, DeLorme base map layers, AND road data, USGS elevation data, UNEP-WCMC parks and protected areas for the world, Tele Atlas Dynamap� and Multinet� street data for North America and Europe, and First American parcel data for the United States. Coverage for street-level data in Europe includes Andorra, Austria, Belgium, Czech Republic, Denmark, France, Germany, Great Britain, Greece, Hungary, Ireland, Italy, Luxembourg, Netherlands, Norway, Poland, Portugal, San Marino, Slovakia, Spain, Sweden, and Switzerland. Coverage for street-level data elsewhere in the world includes China (Hong Kong only), Colombia, Egypt (Cairo only), Indonesia (Jakarta only), Japan, Mexico, Russia, South Africa, Thailand, and Turkey (Istanbul and Ankara only). For more information on this map, visit us online at http://goto.arcgisonline.com/maps/World_Street_Map\n",
-                "copyrightText": "Sources: ESRI, DeLorme, AND, Tele Atlas, First American, ESRI Japan, UNEP-WCMC, USGS, METI, ESRI Hong Kong, ESRI Thailand, Procalculo Prosis",
-                "layers": [
-                    {
-                        "id": 0,
-                        "name": "World Street Map",
-                        "parentLayerId": -1,
-                        "defaultVisibility": true,
-                        "subLayerIds": null,
-                        "minScale": 0,
-                        "maxScale": 0
-                    }
-                  ],
-                "tables": [
-
-                  ],
-                "spatialReference": {
-                    "wkid": 102100
-                },
-                "singleFusedMapCache": true,
-                "tileInfo": {
-                    "rows": 256,
-                    "cols": 256,
-                    "dpi": 96,
-                    "format": "JPEG",
-                    "compressionQuality": 90,
-                    "origin": {
-                        "x": -20037508.342787,
-                        "y": 20037508.342787
-                    },
-                    "spatialReference": {
-                        "wkid": 102100
-                    },
-                    "lods": [
-                      { "level": 0, "resolution": 156543.033928, "scale": 591657527.591555 },
-                      { "level": 1, "resolution": 78271.5169639999, "scale": 295828763.795777 },
-                      { "level": 2, "resolution": 39135.7584820001, "scale": 147914381.897889 },
-                      { "level": 3, "resolution": 19567.8792409999, "scale": 73957190.948944 },
-                      { "level": 4, "resolution": 9783.93962049996, "scale": 36978595.474472 },
-                      { "level": 5, "resolution": 4891.96981024998, "scale": 18489297.737236 },
-                      { "level": 6, "resolution": 2445.98490512499, "scale": 9244648.868618 },
-                      { "level": 7, "resolution": 1222.99245256249, "scale": 4622324.434309 },
-                      { "level": 8, "resolution": 611.49622628138, "scale": 2311162.217155 },
-                      { "level": 9, "resolution": 305.748113140558, "scale": 1155581.108577 },
-                      { "level": 10, "resolution": 152.874056570411, "scale": 577790.554289 },
-                      { "level": 11, "resolution": 76.4370282850732, "scale": 288895.277144 },
-                      { "level": 12, "resolution": 38.2185141425366, "scale": 144447.638572 },
-                      { "level": 13, "resolution": 19.1092570712683, "scale": 72223.819286 },
-                      { "level": 14, "resolution": 9.55462853563415, "scale": 36111.909643 },
-                      { "level": 15, "resolution": 4.77731426794937, "scale": 18055.954822 },
-                      { "level": 16, "resolution": 2.38865713397468, "scale": 9027.977411 },
-                      { "level": 17, "resolution": 1.19432856685505, "scale": 4513.988705 }
-                    ]
-                },
-                "initialExtent": {
-                    "xmin": -20037507.0671618,
-                    "ymin": -20037507.0671618,
-                    "xmax": 20037507.0671618,
-                    "ymax": 20037507.0671619,
-                    "spatialReference": {
-                        "wkid": 102100
-                    }
-                },
-                "fullExtent": {
-                    "xmin": -20037507.0671618,
-                    "ymin": -19971868.8804086,
-                    "xmax": 20037507.0671618,
-                    "ymax": 19971868.8804086,
-                    "spatialReference": {
-                        "wkid": 102100
-                    }
-                },
-                "units": "esriMeters",
-                "supportedImageFormatTypes": "PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,AI,BMP",
-                "documentInfo": {
-                    "Title": "World Street Map",
-                    "Author": "ESRI",
-                    "Comments": "",
-                    "Subject": "streets, highways, major roads, railways, water features, administrative boundaries, cities, parks, protected areas, landmarks ",
-                    "Category": "transportation(Transportation Networks) ",
-                    "Keywords": "World, Global, 2009, Japan, UNEP-WCMC",
-                    "Credits": ""
-                },
-                "capabilities": "Map"
-            };
+        var map;
 
         function init() {
-            var resolutions = [];
-            for (var i = 0; i < layerInfo.tileInfo.lods.length; i++) {
-                resolutions.push(layerInfo.tileInfo.lods[i].resolution);
-            }
 
-            map = new OpenLayers.Map('map', {
-                units: (layerInfo.units == "esriFeet") ? 'ft' : 'm',
-                resolutions: resolutions,
-                tileSize: new OpenLayers.Size(layerInfo.tileInfo.width, layerInfo.tileInfo.height),
-                projection: 'EPSG:' + layerInfo.spatialReference.wkid
-            });
-            
-            osiLayer = new OpenLayers.Layer.ArcGISCache("OSi Streets",
-                    "https://webservices.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Basemap_WM/MapServer?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA..", {
-                        isBaseLayer: true,
-                        //From layerInfo above                        
-                        resolutions: resolutions,
-                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),
-                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x, layerInfo.tileInfo.origin.y),
-                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
-                    });
+            var layerExtent = new OpenLayers.Bounds(-709707, 7045841, -698634, 7053332);
+            map = new OpenLayers.Map('map', { 'restrictedExtent': layerExtent });
 
-                    osiAerialLayer = new OpenLayers.Layer.ArcGISCache("OSi Aerial",
-                    "https://webservices.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Ortho_WM/MapServer?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA..", {
-                        isBaseLayer: true,
-                        //From layerInfo above                        
-                        resolutions: resolutions,
-                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),
-                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x, layerInfo.tileInfo.origin.y),
-                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
-                    });
+            var osiLayer = new OpenLayers.Layer.XYZ("OSi Topographic",
+                    "https://webservices.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Basemap_WM/MapServer/tile/${z}/${y}/${x}?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA..",
+                    { sphericalMercator: true });
 
-                    map.addLayers([osiLayer, osiAerialLayer]);
+            var osiAerialLayer = new OpenLayers.Layer.XYZ("OSi Aerial",
+                    "https://webservices.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Ortho_WM/MapServer/tile/${z}/${y}/${x}?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA..",
+                    { sphericalMercator: true });
+
+            map.addLayers([osiLayer, osiAerialLayer]);
 
             map.addControl(new OpenLayers.Control.LayerSwitcher());
             map.zoomToExtent(new OpenLayers.Bounds(-709707, 7045841, -698634, 7053332));
