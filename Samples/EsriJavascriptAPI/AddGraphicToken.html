@@ -13,7 +13,6 @@
     <script src="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/"></script>
     <script>
         dojo.require("esri.map");
-        dojo.require("esri.layers.ArcGISTiledMapServiceLayer");
 
         var map;
         function init() {
@@ -25,6 +24,11 @@
             var osiMap = new esri.layers.ArcGISTiledMapServiceLayer("https://webservices.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Basemap_WM/MapServer?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA..");
             map.addLayer(osiMap);
 
+            // Wait for the map to load. The graphics object is available to use after the Map.onLoad event.
+            dojo.connect(map, "onLoad", function () { AddGraphics(-81.3765, 28.54175); });  
+        }
+
+        function AddGraphics(x, y) {
             var markerSymbol = new esri.symbol.SimpleMarkerSymbol().setStyle(
                 esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE).setColor(
                     new dojo.Color([255, 0, 0, 0.5]));
@@ -46,7 +50,6 @@
             var polygonGraphic = new esri.Graphic(polygon, sfs, null, polygonInfoTemplate);
 
             map.graphics.add(polygonGraphic);
-
 
             dojo.connect(map, "onClick", function (e) {
                 var markerSymbol = new esri.symbol.SimpleMarkerSymbol().setStyle(
