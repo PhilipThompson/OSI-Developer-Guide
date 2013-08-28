@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Hello World OSI Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Philip Thompson">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" /><![endif]-->
+</head>
+<body>
+    <div id="map" style="width: 600px; height: 400px"></div>
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+    <script src="http://geojason.info/leaflet-vector-layers/dist/lvector.js" type="text/javascript"></script>
+    <script>
+
+        var map = L.map('map').setView([53.36151, -6.3386], 13);
+
+        L.tileLayer('https://webservices.osi.ie/ArcGIS/rest/services/webmercator/MapGenie_Basemap_WM/MapServer/tile/{z}/{y}/{x}?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA..', {
+            attribution: 'OSi copyright goes here! &copy; <a href="http://www.osi.ie">OSi</a> '
+        }).addTo(map);
+
+    </script>
+</body>
+</html>
