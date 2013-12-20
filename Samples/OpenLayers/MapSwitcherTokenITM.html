@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>OpenLayers Hello World OSI Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="author" content="Philip Thompson">
+    <script src="http://openlayers.org/dev/OpenLayers.js"></script>
+    <script src="http://openlayers.org/dev/lib/OpenLayers/Layer/ArcGISCache.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var map;
+
+        function init() {
+
+            var bounds = new OpenLayers.Bounds(420000, 485000, 770000, 985000);
+            var options = {
+                maxExtent: bounds,
+                projection: "EPSG:2157",
+                units: 'm'
+            };
+            map = new OpenLayers.Map('map', options);
+
+            var osiLayer = new OpenLayers.Layer.ArcGIS93Rest("OSi Topographic", "https://webservices.osi.ie/ArcGIS/rest/services/ITM/MapGenie_Basemap_ITM/MapServer/export?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA..");      
+            var osiAerialLayer = new OpenLayers.Layer.ArcGIS93Rest("OSi Aerial", "https://webservices.osi.ie/ArcGIS/rest/services/ITM/MapGenie_Ortho_ITM/MapServer/export?token=xS675AT6-RK3stk_oA8P4kKV7Wun42jtHx4JuxLfKrOWHrQ_P-8RQ6jOVTSecUGO-vBY4x8Ys8Ygz9rzHnhwMA..");
+            map.addLayers([osiLayer, osiAerialLayer]);
+
+            map.addControl(new OpenLayers.Control.LayerSwitcher());
+            map.zoomToExtent(new OpenLayers.Bounds(708125, 734142, 713686, 737073));
+        }
+    </script>
+</head>
+<body onload="init()">
+    <div id="map" style="width: 600px; height: 400px">
+    </div>
+</body>
+</html>
